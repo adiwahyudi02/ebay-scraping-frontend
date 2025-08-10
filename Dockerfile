@@ -6,6 +6,10 @@ WORKDIR /app
 COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
 RUN npm install --frozen-lockfile
 
+# add build arg and env var for NEXT_PUBLIC_BACKEND_API_URL
+ARG NEXT_PUBLIC_BACKEND_API_URL
+ENV NEXT_PUBLIC_BACKEND_API_URL=$NEXT_PUBLIC_BACKEND_API_URL
+
 # copy all files and build the app
 COPY . .
 RUN npm run build

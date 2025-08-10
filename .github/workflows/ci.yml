@@ -47,3 +47,5 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.SHORT_SHA }}
             ghcr.io/${{ github.repository }}:latest
+          build-args: |
+            NEXT_PUBLIC_BACKEND_API_URL=http://backend:4000
