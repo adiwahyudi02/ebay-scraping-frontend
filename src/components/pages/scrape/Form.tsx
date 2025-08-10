@@ -18,7 +18,7 @@ const defaultValues: QueryType = {
 export const querySchema = z.object({
   getAll: z.boolean().optional(),
   scrapeDetails: z.boolean().optional(),
-  search: z.string().optional(),
+  search: z.string().min(1),
 
   page: z.union([z.string(), z.number().min(1)]),
   size: z.union([z.string(), z.number().min(1).max(240)]),
