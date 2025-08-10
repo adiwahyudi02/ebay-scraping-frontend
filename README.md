@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# eBay Scraping (Frontend)
 
-## Getting Started
+![Screenshot](./public/ebay-scraping-app.png)
 
-First, run the development server:
+## Description
+
+**This is an eBay scraper that allows you to search for products and view the results in json.**
+
+The backend streams results as they are scraped using Server-Sent Events (SSE), so the frontend receives data immediately without waiting for the entire scraping job to finish.
+
+This real-time streaming improves user experience by showing results faster and letting users interact with partial data while more results continue loading.
+
+You can find the backend here: [GitHub - ebay-scraping-backend](https://github.com/adiwahyudi02/ebay-scraping-backend)
+
+## Tech Stack
+
+- Next.js
+- Styling (TailwindCSS + clsx)
+- Form Handling (react-hook-form + zod validation)
+- Json Viewer (react-syntax-highlighter + react-window for the virtualization performance)
+- Typescript + eslint + husky
+
+## Run the app
+
+You can run locally with Node.js, or use Docker.
+
+### Option 1: Local development
+
+##### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##### 2. Setup environments
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a .env.local file in the root project by copying from the provided example file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+  cp .env.example .env.local
+```
 
-## Learn More
+Then adjust the values to match your local setup.
 
-To learn more about Next.js, take a look at the following resources:
+##### 3. Run the app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  # run in dev mode
+  npm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  # or build & start production build
+  npm run build
+  npm run start
+```
 
-## Deploy on Vercel
+### Option 2: With Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project includes a `docker-compose.yml` that runs the `ebayebay-scraping-backend` image and the `ebay-scraping-frontend` image together.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Docker images are published automatically to GitHub Container Registry (GHCR) through the CI/CD pipeline.
+
+> By default, in `docker-compose.yml` uses the `latest` tag for the images. Optionally you can change it by checking the available tags in the GitHub Packages registry.
+
+##### 1. Setup configuration in `docker-compose.yml`
+
+Then adjust the values to match your local setup. especially for `OPENROUTER_API_KEY` environment. You can create your `OPENROUTER_API_KEY` by signing up and generating an API key at OpenRouter's official site: https://openrouter.ai/signup
+
+##### 2. Docker scripts
+
+- To start the Apps (Backend & Frontend)
+
+```bash
+   docker compose up
+
+   # After that you can access the app in http://localhost:3000
+```
+
+- To stop and remove the containers:
+
+```bash
+   docker compose down
+```
+
+## Run Linter
+
+```bash
+  npm run lint
+```
