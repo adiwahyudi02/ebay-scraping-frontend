@@ -56,12 +56,7 @@ export const Form: React.FC<IForm> = ({ startScrape }) => {
       params.append("search", data.search);
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
-    if (!baseUrl) {
-      throw new Error("NEXT_PUBLIC_BACKEND_API_URL is not defined");
-    }
-
-    const url = `${baseUrl}/api/scrape?${params.toString()}`;
+    const url = `/api/scrape?${params.toString()}`;
     startScrape(url);
   };
 
